@@ -15,20 +15,20 @@ Trigger Function:
 
 -- -- sql
 
--- CREATE OR REPLACE FUNCTION update_salary_on_project_assignment()
--- RETURNS TRIGGER AS $$
--- BEGIN
---   UPDATE Employees
---   SET salary = salary * 1.05 -- 5% increase
---   WHERE employee_id = NEW.assigned_to;
---   RETURN NEW;
--- END;
+CREATE OR REPLACE FUNCTION update_salary_on_project_assignment()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE Employees
+  SET salary = salary * 1.05 -- 5% increase
+  WHERE employee_id = NEW.assigned_to;
+  RETURN NEW;
+END;
 -- $$ LANGUAGE plpgsql;
 
--- CREATE TRIGGER project_assignment_trigger
--- AFTER INSERT ON Tasks
--- FOR EACH ROW
--- EXECUTE FUNCTION update_salary_on_project_assignment();
+CREATE TRIGGER project_assignment_trigger
+AFTER INSERT ON Tasks
+FOR EACH ROW
+EXECUTE FUNCTION update_salary_on_project_assignment();
 -- Report:
 -- Now let's create the SQL query to generate the report. We want to show the top 5 earners, active projects, and task assignments for employees.
 
